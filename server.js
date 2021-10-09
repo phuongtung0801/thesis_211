@@ -13,14 +13,21 @@ const session = require('express-session') //thư viện để lưu data vào co
 const methodOverride = require('method-override') //thư viện để ghi đề các HTTP request
 
 
-const initializePassport = require('./passport-config')
+const initializePassport = require('./passport-config') //require function từ file passport-config
+//pass vào function này 3 arguments: passport để dùng passport,
+//function  getUserByEmail và getUserById
 initializePassport(
   passport,
-  (mail) => {return users.find(user => user.email === mail)}, //getUserByEmail
+  //getUserByEmail so sánh email mà user nhập vào ở '/login' và email của user đã lưu
+  //trong users, nếu trùng nhau thì trả về object users
+  (mail) => {return users.find(user => user.email === mail)}, 
+    //  console.log(users.find(user => user.email === mail))}, //getUserByEmail
+  //getUserById so sánh Id của user nhập vào ở '/login' và email của user đã lưu
+  //trong users, nếu trùng nhau thì trả về object users
   i => {return users.find(user => user.id === i)} //getUserById     
 )
 
-//tạo một class để lưu thông tin user
+//tạo một object để lưu thông tin user
 const users = []
 
 app.set('view-engine', 'ejs')
@@ -28,8 +35,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false
+  resave: true,
+  saveUninitialized: true
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -51,7 +58,9 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
-}))
+}),
+//console.log(users)
+)
 
 //check nếu user đã login thì không cho đi ra trang '/register'
 app.get('/register', checkNotAuthenticated, (req, res) => {
