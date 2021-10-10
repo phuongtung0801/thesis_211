@@ -37,4 +37,4 @@ function initialize(passport, getUserByEmail, getUserById) {
   })
 }
 //export function initialize để ở các file khác có thể call hàm này sau khi require file passport-config
-module.exports = initialize
+module.exports.initializeFunction = initialize

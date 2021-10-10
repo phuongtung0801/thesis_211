@@ -13,7 +13,7 @@ const session = require('express-session') //thư viện để lưu data vào co
 const methodOverride = require('method-override') //thư viện để ghi đề các HTTP request
 
 
-const initializePassport = require('./passport-config') //require function từ file passport-config
+const initializePassport = require('./passport-config').initializeFunction //require function từ file passport-config
 //pass vào function này 3 arguments: passport để dùng passport,
 //function  getUserByEmail và getUserById
 initializePassport(
@@ -41,10 +41,16 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
+app.use((req, res, next)=> {
+  console.log(req.session)
+  console.log(req.user)
+  next()
+})
+
 
 //check xem user đã login chưa, nếu rồi thì render '/'
 app.get('/', checkAuthenticated, (req, res) => {
-  res.render('index.ejs', { name: req.user.name })
+   res.render('index.ejs', { name: req.user.name })
 })
 
 //check xem user đã login rồi thì không cho đi ra các trang khác
