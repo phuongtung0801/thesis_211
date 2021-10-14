@@ -5,6 +5,17 @@ A new Flutter application.
 # instruction
 
 Đây là hướng dẫn sử dụng source code mqtt_app_flutter.
+'''
+passport.use(new LocalStrategy({
+usernameField: 'email',
+passwordField: 'passwd',
+session: false
+},
+function(username, password, done) {
+// ...
+}
+));
+'''
 
 ## Getting Started
 
