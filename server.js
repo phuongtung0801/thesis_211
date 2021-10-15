@@ -49,8 +49,6 @@ app.use(passport.session()) //liên quan đến deserializeUser()
 app.use(methodOverride('_method'))
 //app.use(require('./routes'))
 
-
-
 /*ROUTES*/
 //check xem user đã login chưa, nếu rồi thì render '/'
 app.get('/', checkAuthenticated, (req, res) => {
