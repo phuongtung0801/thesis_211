@@ -39,7 +39,7 @@ app.use(session({
   saveUninitialized: true
 }))
 app.use((req, res, next) => {
-  console.log(req.session)
+  //console.log(req.session)
   next()
 })
 //initialize() setups the functions to serialize/deserialize the user data from the request.
@@ -118,7 +118,7 @@ function checkNotAuthenticated(req, res, next) {
     return res.redirect('/')
   }
   else{
-    console.log(req.session.passport)
+    console.log('not authenticated')
     next()
   }
   
