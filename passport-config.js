@@ -11,6 +11,7 @@ function initialize(passport, getUserByEmail, getUserById) {
     try {
       if (await bcrypt.compare(password, user.password)) {
         return done(null, user)
+        //console.log(user)
       } else {
         return done(null, false, { message: 'Password incorrect' })
       }
@@ -32,9 +33,10 @@ function initialize(passport, getUserByEmail, getUserById) {
   passport.deserializeUser((id, done) => {
     //dùng hàm getUserById mà server.js đã pass vào để find user dựa vào id lưu trong cookie, lấy
     //ra được cả object user để có thể dùng cho các bước xác thực khác
-    return done(null, getUserById(id)),
-    console.log(getUserById(id))
+    return done(null, getUserById(id))
+    //console.log(getUserById(id))
   })
 }
-//export function initialize để ở các file khác có thể call hàm này sau khi require file passport-config
+//export function initialize với tên là initializeFunction để ở các file khác có thể call
+//hàm này bằng cách gọi initializeFunction sau khi require file passport-config
 module.exports.initializeFunction = initialize
